@@ -1,0 +1,38 @@
+# 概要
+
+Claude APIを使ったアプリケーションでは、プロンプト（AIへの指示文）は通常、2つの要素で構成されます。
+ • 固定コンテンツ：毎回変わらない指示や文脈（例：タスクの説明やルール）
+ • 可変コンテンツ：リクエストごとに変わる部分（例：ユーザー入力、RAGで取得した外部情報、会話履歴、ツールの出力など）
+
+プロンプトテンプレートは、これらの固定部分と可変部分（変数）を組み合わせたものです。Anthropic Consoleでは、変数部分を‎⁠{{ダブルブレース}}⁠で囲んで記述します。これにより、どこが動的に差し替わるかが明確になり、テストや管理がしやすくなります。
+
+# いつテンプレートと変数を使うべきか
+ • プロンプトの一部が他のAPIコールや会話でも繰り返し使われる場合は、必ずテンプレートと変数を使いましょう。
+ • これはAPIやAnthropic Consoleで有効です（claude.aiでは未対応）。
+
+# テンプレートを使うメリット
+ • 一貫性：複数のやりとりでプロンプト構造を統一できる
+ • 効率性：変数部分だけを差し替えて再利用できる
+ • テスト容易性：変数だけ変えて様々な入力やエッジケースをすぐ試せる
+ • スケーラビリティ：アプリが複雑になってもプロンプト管理が簡単
+ • バージョン管理：テンプレート本体と変数を分けて管理できるので、変更履歴が追いやすい
+
+# Anthropic Consoleでの活用例
+ • プロンプトジェネレーター (https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/prompt-generator)：必要な変数を自動でテンプレートに含めてくれる
+ • プロンプトインプルーバー (https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/prompt-improver)：既存テンプレートの変数を維持したまま改善案を出してくれる
+ • 評価ツール (https://docs.anthropic.com/en/docs/test-and-evaluate/eval-tool)：テンプレートの固定部分と変数部分を分けてテストやバージョン管理ができる
+
+# プロンプトテンプレートの例
+
+英語からスペイン語への翻訳アプリを例にすると、翻訳したいテキストは毎回変わるので変数にします。
+
+テンプレート例：Translate this text from English to Spanish: {{text}}
+
+（訳：このテキストを英語からスペイン語に翻訳してください：{{text}}）
+
+# 次のステップ
+ • プロンプトジェネレーター (https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/prompt-generator)でテンプレートを自動生成
+ • XMLタグを使った高度な変数管理 (https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags)も可能
+ • Anthropic Console (https://console.anthropic.com/)で各種プロンプト開発ツールを試せます
+
+プロンプトテンプレートと変数を活用することで、ClaudeなどのAIアプリ開発が効率的かつ堅牢になります。
